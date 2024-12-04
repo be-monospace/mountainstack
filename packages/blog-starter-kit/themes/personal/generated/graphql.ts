@@ -86,6 +86,17 @@ export type AddCommentPayload = {
   comment?: Maybe<Comment>;
 };
 
+export type AddCustomMdxComponentInput = {
+  code: Scalars['String']['input'];
+  componentId: Scalars['String']['input'];
+  projectId: Scalars['ID']['input'];
+};
+
+export type AddCustomMdxComponentPayload = {
+  __typename?: 'AddCustomMdxComponentPayload';
+  project: DocumentationProject;
+};
+
 export type AddDocumentationProjectCustomDomainInput = {
   domain: Scalars['String']['input'];
   projectId: Scalars['ID']['input'];
@@ -1210,6 +1221,16 @@ export enum DefaultDocsTheme {
   Light = 'LIGHT'
 }
 
+export type DeleteCustomMdxComponentInput = {
+  componentId: Scalars['String']['input'];
+  projectId: Scalars['ID']['input'];
+};
+
+export type DeleteCustomMdxComponentPayload = {
+  __typename?: 'DeleteCustomMdxComponentPayload';
+  project: DocumentationProject;
+};
+
 /** Input to delete a role based invite. */
 export type DeleteRoleBasedInviteInput = {
   /** The ID of the role based invite. */
@@ -1726,6 +1747,18 @@ export type DocumentationProjectAppearanceInput = {
   logoDarkThemeUrl?: InputMaybe<Scalars['String']['input']>;
   logoUrl?: InputMaybe<Scalars['String']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DocumentationProjectCustomComponent = Node & {
+  __typename?: 'DocumentationProjectCustomComponent';
+  /** The code of the custom component. */
+  code: Scalars['String']['output'];
+  /** componentId, can be embedded as %%[componentId] in the docs */
+  componentId: Scalars['String']['output'];
+  /** The unique identifier of the custom component */
+  id: Scalars['ID']['output'];
+  /** The transpiled code of the custom component. */
+  transpiledCode: Scalars['String']['output'];
 };
 
 export type DocumentationProjectCustomDomain = {
@@ -3132,6 +3165,7 @@ export type Mutation = {
   acceptRoleBasedInvite: AcceptRoleBasedInvitePayload;
   /** Adds a comment to a post. */
   addComment: AddCommentPayload;
+  addCustomMdxComponent: AddCustomMdxComponentPayload;
   addDocumentationProjectCustomDomain: AddDocumentationProjectCustomDomainPayload;
   /** Adds a post to a series. */
   addPostToSeries: AddPostToSeriesPayload;
@@ -3159,6 +3193,7 @@ export type Mutation = {
   /** Creates a new series. */
   createSeries: CreateSeriesPayload;
   createWebhook: CreateWebhookPayload;
+  deleteCustomMdxComponent: DeleteCustomMdxComponentPayload;
   /** Deletes a role based invite. */
   deleteRoleBasedInvite: DeleteRoleBasedInvitePayload;
   deleteWebhook: DeleteWebhookPayload;
@@ -3267,6 +3302,7 @@ export type Mutation = {
   unsubscribeFromNewsletter: UnsubscribeFromNewsletterPayload;
   /** Updates a comment on a post. */
   updateComment: UpdateCommentPayload;
+  updateCustomMdxComponent: UpdateCustomMdxComponentPayload;
   updateDocumentationAppearance: UpdateDocumentationAppearancePayload;
   updateDocumentationGeneralSettings: UpdateDocumentationGeneralSettingsPayload;
   updateDocumentationGuide: UpdateDocumentationGuidePayload;
@@ -3308,6 +3344,11 @@ export type MutationAcceptRoleBasedInviteArgs = {
 
 export type MutationAddCommentArgs = {
   input: AddCommentInput;
+};
+
+
+export type MutationAddCustomMdxComponentArgs = {
+  input: AddCustomMdxComponentInput;
 };
 
 
@@ -3393,6 +3434,11 @@ export type MutationCreateSeriesArgs = {
 
 export type MutationCreateWebhookArgs = {
   input: CreateWebhookInput;
+};
+
+
+export type MutationDeleteCustomMdxComponentArgs = {
+  input: DeleteCustomMdxComponentInput;
 };
 
 
@@ -3684,6 +3730,11 @@ export type MutationUnsubscribeFromNewsletterArgs = {
 
 export type MutationUpdateCommentArgs = {
   input: UpdateCommentInput;
+};
+
+
+export type MutationUpdateCustomMdxComponentArgs = {
+  input: UpdateCustomMdxComponentInput;
 };
 
 
@@ -4705,6 +4756,7 @@ export type Publication = Node & {
   isTeam: Scalars['Boolean']['output'];
   /** Links to the publication's social media profiles. */
   links?: Maybe<PublicationLinks>;
+  members: PublicationMemberConnection;
   /** The meta tags associated with the publication. */
   metaTags?: Maybe<Scalars['String']['output']>;
   /** Information about the publication's Open Graph metadata i.e. image. */
@@ -4718,6 +4770,8 @@ export type Publication = Node & {
   postsViaPage: PublicationPostPageConnection;
   /** The publication preferences around layout, theme and other personalisations. */
   preferences: Preferences;
+  /** Returns a paginated list of public members of the publication. */
+  publicMembers: PublicationMemberConnection;
   /** Publications that are recommended by this publication. */
   recommendedPublications: Array<UserRecommendedPublicationEdge>;
   /** Publications that are recommending this publication. */
@@ -4798,6 +4852,17 @@ export type PublicationDraftsArgs = {
  * Contains basic information about the publication.
  * A publication is a blog that can be created for a user or a team.
  */
+export type PublicationMembersArgs = {
+  filter?: InputMaybe<PublicationMemberConnectionFilter>;
+  page: Scalars['Int']['input'];
+  pageSize: Scalars['Int']['input'];
+};
+
+
+/**
+ * Contains basic information about the publication.
+ * A publication is a blog that can be created for a user or a team.
+ */
 export type PublicationPostArgs = {
   slug: Scalars['String']['input'];
 };
@@ -4820,6 +4885,16 @@ export type PublicationPostsArgs = {
  */
 export type PublicationPostsViaPageArgs = {
   filter?: InputMaybe<PublicationPostsViaPageFilter>;
+  page: Scalars['Int']['input'];
+  pageSize: Scalars['Int']['input'];
+};
+
+
+/**
+ * Contains basic information about the publication.
+ * A publication is a blog that can be created for a user or a team.
+ */
+export type PublicationPublicMembersArgs = {
   page: Scalars['Int']['input'];
   pageSize: Scalars['Int']['input'];
 };
@@ -5057,6 +5132,22 @@ export type PublicationMember = Node & {
   role: UserPublicationRole;
   /** The user who is a member of the publication. */
   user?: Maybe<User>;
+};
+
+export type PublicationMemberConnection = PageConnection & {
+  __typename?: 'PublicationMemberConnection';
+  /** A list of members */
+  nodes: Array<PublicationMember>;
+  /** Information for page based pagination in Member connection. */
+  pageInfo: OffsetPageInfo;
+  /** The total number of documents in the connection. */
+  totalDocuments: Scalars['Int']['output'];
+};
+
+/** The filter for the publication member connection. */
+export type PublicationMemberConnectionFilter = {
+  /** Search filter can be used to filter members by their username or email. */
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Publication member privacy state on members page */
@@ -5879,9 +5970,6 @@ export type ScheduledPost = Node & {
 export enum Scope {
   AcknowledgeEmailImport = 'acknowledge_email_import',
   ActiveProUser = 'active_pro_user',
-  AssignProPublications = 'assign_pro_publications',
-  ChangeProSubscription = 'change_pro_subscription',
-  CreatePro = 'create_pro',
   DeleteDraft = 'delete_draft',
   DocsAdminOrOwner = 'docs_admin_or_owner',
   DocsOwner = 'docs_owner',
@@ -6392,6 +6480,17 @@ export type UpdateCommentPayload = {
   comment?: Maybe<Comment>;
 };
 
+export type UpdateCustomMdxComponentInput = {
+  code: Scalars['String']['input'];
+  componentId: Scalars['String']['input'];
+  projectId: Scalars['ID']['input'];
+};
+
+export type UpdateCustomMdxComponentPayload = {
+  __typename?: 'UpdateCustomMdxComponentPayload';
+  project: DocumentationProject;
+};
+
 export type UpdateDocumentationAppearanceInput = {
   appearance: DocumentationProjectAppearanceInput;
   projectId: Scalars['ID']['input'];
@@ -6697,8 +6796,6 @@ export type User = IUser & Node & {
   followsBack: Scalars['Boolean']['output'];
   /** The ID of the user. It can be used to identify the user. */
   id: Scalars['ID']['output'];
-  /** Whether or not this is a pro user. */
-  isPro: Scalars['Boolean']['output'];
   /** The location of the user. */
   location?: Maybe<Scalars['String']['output']>;
   /** The name of the user. */
@@ -6921,8 +7018,6 @@ export type UserPublicationsConnection = Connection & {
 
 /** Filter to apply to the publications. */
 export type UserPublicationsConnectionFilter = {
-  /** Only return pro publications. */
-  isPro?: InputMaybe<Scalars['Boolean']['input']>;
   /** Only include publication in which the user has one of the provided roles. */
   roles?: InputMaybe<Array<UserPublicationRole>>;
 };
