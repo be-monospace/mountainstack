@@ -1,0 +1,14 @@
+.theme-saturn-887a {
+  --astroTypographyH1: 700 57px/64px "Roboto";
+  --astroTypographyH2: 700 43px/50px "Roboto";
+  --astroTypographyH3: 700 32px/40px "Roboto";
+  --astroTypographyH4: 700 24px/32px "Roboto";
+  --astroTypographyH5: 700 21px/29px "Roboto";
+  --astroTypographyLargeLead: 400 24px/32px "Roboto";
+  --astroTypographyMediumLead: 400 21px/29px "Roboto";
+  --astroTypographyButtonLabel: 400 21px/29px "Roboto";
+  --astroTypographyParagraph: 400 18px/26px "Roboto";
+  --astroTypographySmallParagraph: 400 16px/24px "Roboto";
+  --astroTypographyTinyParagraph: 400 12px/24px "Roboto";
+  --astroTypographySale: 700 24px/34px "Roboto";
+}

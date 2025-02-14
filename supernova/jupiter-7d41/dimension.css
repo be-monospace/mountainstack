@@ -1,0 +1,27 @@
+.theme-jupiter-7d41 {
+  /* No radius */
+  --astroDimensionBorderRadiusNone: 0px;
+  --astroDimensionBorderRadiusSmall: 3px;
+  --astroDimensionBorderRadiusDefault: 5px;
+  --astroDimensionBorderRadiusMedium: 8px;
+  --astroDimensionBorderRadiusLarge: 12px;
+  /* Essentially a circle */
+  --astroDimensionBorderRadiusFull: 999px;
+  --astroDimensionSpacing0: 0px;
+  --astroDimensionSpacing2: 2px;
+  --astroDimensionSpacing4: 4px;
+  --astroDimensionSpacing8: 8px;
+  --astroDimensionSpacing12: 12px;
+  --astroDimensionSpacing16: 16px;
+  --astroDimensionSpacing20: 20px;
+  --astroDimensionSpacing24: 24px;
+  --astroDimensionSpacing28: 28px;
+  --astroDimensionSpacing32: 32px;
+  --astroDimensionSpacing36: 36px;
+  --astroDimensionSpacing40: 40px;
+  --astroDimensionSpacingSemanticStackGap: 1px;
+  --astroDimensionOpacityDisabled: 50px;
+  --astroDimensionShadowFocusRingWidth: 3px;
+  --astroDimensionPaletteMagentaNumber: 0px;
+  --astroDimensionExample: 64px;
+}
